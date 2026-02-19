@@ -1,0 +1,10 @@
+# Node modules
+node_modules/
+
+# Cypress screenshots & videos
+cypress/screenshots/
+cypress/videos/
+
+# OS files
+.DS_Store
+Thumbs.db
