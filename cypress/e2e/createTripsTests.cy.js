@@ -1,21 +1,30 @@
 import HomePage from '../autoTests/pages/homePage';
+import PromoModal from '../autoTests/pages/promoModal';
 Cypress.config('log', false);
 
 describe('Create Trips Test', () => {
 
   it('Navigates to Roadtrippers homepage', () => {
-
-    cy.intercept('https://h.clarity.ms/**', { log: false });
-    cy.intercept('https://m.stripe.com/**', { log: false });
     
-    HomePage.visit();
+    HomePage.navigateToHomePage();
 
     cy.url().should('include', 'roadtrippers.com');
 
-    cy.frameLoaded('iframe[id^="gist-"]');
-    cy.iframe()
-      .find('img[src*="close-padding"]')
-      .click();
+    HomePage.clickLogin();
+
+    
+    // Remove marketing iframes if they exist
+    cy.get('body').then(($body) => {
+
+      const iframes = $body.find('iframe[id^="gist-"]');
+
+      if (iframes.length > 0) {
+        cy.wrap(iframes).invoke('remove');
+      }
+
+    
+  });
+
   });
 
 });

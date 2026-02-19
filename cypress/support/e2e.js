@@ -16,6 +16,7 @@
 // Import commands.js using ES2015 syntax:
 import './commands'
 
+// Import cypress-iframe plugin to allow Cypress to access elements inside iframes
 import 'cypress-iframe';
 
 // This prevents Cypress from failing due to third-party script errors.

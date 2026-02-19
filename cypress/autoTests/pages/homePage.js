@@ -1,5 +1,12 @@
 class HomePage {
-  visit() {
+
+  loginButton = 'a[data-target="#login"]';
+
+  clickLogin() {
+    cy.get(this.loginButton).click();
+  }
+
+  navigateToHomePage() {
     cy.visit('https://roadtrippers.com/');
   }
 }
