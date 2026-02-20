@@ -1,29 +1,26 @@
 import HomePage from '../autoTests/pages/homePage';
-import PromoModal from '../autoTests/pages/promoModal';
-Cypress.config('log', false);
+import loginModal from '../autoTests/pages/loginModal';
 
-describe('Create Trips Test', () => {
 
-  it('Navigates to Roadtrippers homepage', () => {
-    
+describe('Create Trips Tests', () => {
+
+   /**
+   * Navigates to the Roadtrippers homepage
+   * and logs into the application before each test.
+   */
+  beforeEach(() => {
+
     HomePage.navigateToHomePage();
-
-    cy.url().should('include', 'roadtrippers.com');
-
+    cy.url({ timeout: 10000 }).should('include', 'roadtrippers.com');
+    HomePage.closePopupIfPresent();
+    HomePage.acceptCookiesIfPresent();
     HomePage.clickLogin();
+    loginModal.loginWithEnv('usernameIvayloOne', 'passwordIvayloOne');
 
-    
-    // Remove marketing iframes if they exist
-    cy.get('body').then(($body) => {
-
-      const iframes = $body.find('iframe[id^="gist-"]');
-
-      if (iframes.length > 0) {
-        cy.wrap(iframes).invoke('remove');
-      }
-
-    
   });
+
+  it('Create new trip with valid credentials', () => {
+
 
   });
 
