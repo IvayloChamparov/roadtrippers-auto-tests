@@ -5,13 +5,33 @@ class HomePage {
     return cy.get('a[data-target="#login"]').filter(':visible');
   }
 
+  autopilotRadioButton() {
+  return cy.get('#radio-autopilot');
+  }
+
+  toInput() {
+  return cy.get('.search_input_to');
+  }
+
+  fromInput() {
+    return cy.get('.search_input_from');
+  }
+
+  searchResults() {
+    return cy.get('.search__results li');
+  }
+
+  goButton() {
+  return cy.get('.plan_trip_search_button');
+  }
+
   // Define methods and actions for the homepage
   clickLogin() {
     this.loginButton().click();
   }
 
   navigateToHomePage() {
-    cy.visit('https://roadtrippers.com/');
+  cy.visit('/');
   }
 
   /**
@@ -49,7 +69,37 @@ class HomePage {
       }
     });
   }
+
+  selectAutopilotPlanningStyle() {
+  this.autopilotRadioButton()
+    .should('exist')
+    .check()
+    .should('be.checked');
+  }
   
+  selectFirstSearchResult(inputElement, text) {
+  inputElement()
+    .should('be.visible')
+    .clear()
+    .type(text);
+
+  this.searchResults()
+    .should('have.length.greaterThan', 0)
+    .first()
+    .click();
+  }
+
+  selectRoute(fromCity, toCity) {
+  this.selectFirstSearchResult(this.toInput, toCity);
+  this.selectFirstSearchResult(this.fromInput, fromCity);
+  }
+
+  clickGoButton() {
+  this.goButton()
+    .should('be.visible')
+    .and('not.be.disabled')
+    .click();
+  }
 }
 
 export default new HomePage();

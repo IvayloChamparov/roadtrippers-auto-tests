@@ -25,6 +25,15 @@ class LoginModal {
     this.usernameField().type(username);
     this.passwordField().type(password);
     this.loginButton().click();
+
+    cy.wait(2000);
+
+    cy.get('body').then(($body) => {
+      if ($body.find('#authorize-with-password-submit').length > 0) {
+        cy.log('Retrying login...');
+        cy.get('#authorize-with-password-submit').click();
+      }
+    });
   }
 
   /**

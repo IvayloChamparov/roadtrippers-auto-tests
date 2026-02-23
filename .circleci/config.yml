@@ -1,0 +1,14 @@
+version: 2.1
+jobs:
+  cypress-run:
+    docker:
+      - image: cypress/base:16
+    steps:
+      - checkout
+      - run: npm ci
+      - run: npx cypress run --headless
+workflows:
+  version: 2
+  test:
+    jobs:
+      - cypress-run
